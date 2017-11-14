@@ -1,0 +1,19 @@
+{
+  "name": "dom-react-todos",
+  "version": "1.0.0",
+  "description": "practice react todo component with express.js api server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominicgan/react-todos.git"
+  },
+  "author": "Dominic Gan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dominicgan/react-todos/issues"
+  },
+  "homepage": "https://github.com/dominicgan/react-todos#readme"
+}
