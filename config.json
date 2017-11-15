@@ -1,0 +1,29 @@
+{
+  "projName": "react-todos",
+  "destPath": "/dist",
+  "path": {
+    "assetspath": ".",
+    "distpath": "./dist",
+    "jadepath": ".",
+    "jspath": "./js",
+    "csspath": "./css",
+    "libspath": "./assets/vendor",
+    "pluginpath": "./plugins"
+  },
+  "server": {
+    "lrStarted": false,
+    "connection": {
+      "local": "localhost",
+      "external": null,
+      "port": null
+    }
+  },
+  "build": {
+    "isStage": false,
+    "isProd": false
+  },
+  "netlify" : {
+    "site_id": "",
+    "access_token": ""
+  }
+}
