@@ -1,6 +1,6 @@
 const webpack      = require('webpack');
 const path         = require('path');
-const pkg          = require('./config.json');
+const pkg          = require('../config.json');
 const environments = require('gulp-environments');
 
 const webpackSettings = {
