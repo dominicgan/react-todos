@@ -1,0 +1,11 @@
+.todos__input {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: nowrap;
+
+	input {
+		margin-bottom: 0;
+		margin-right: 10px;
+	}
+}

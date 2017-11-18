@@ -1,0 +1,118 @@
+.listitem {
+	$input-width: 15px;
+
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-wrap: nowrap;
+	padding: 5px;
+	transition: all 0.15s ease-in-out;
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: $seashell;
+		position: relative;
+
+		.listitem__label {
+			&:after {
+				pointer-events: none;
+				content: attr(data-tooltip);
+				display: block;
+				position: absolute;
+				right: 10px;
+				font-size: 13px;
+				line-height: 1;
+				top: 50%;
+				transform: translateY(-50%);
+				opacity: 0.5;
+			}
+		}
+	}
+
+	.listitem__input {
+		cursor: pointer;
+		width: $input-width;
+	}
+
+	.listitem__display {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: nowrap;
+		width: calc(100% - #{$input-width} - 0.375em);
+
+		.listitem__btn-edit {
+			transition: all 0.15s ease-in-out;
+		}
+
+		&.hidden {
+			.listitem__label {
+				display: inline-block;
+			}
+
+			.listitem__btn-edit {
+				display: inline-block;
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			&:hover,
+			&:focus,
+			&:active {
+				.listitem__btn-edit {
+					opacity: 1;
+					pointer-events: auto;
+				}
+			}
+
+			.listitem__form {
+				display: none;
+				visibility: hidden;
+			}
+		}
+	}
+
+	.listitem__label {
+		position: relative;
+		cursor: pointer;
+		width: calc(100% - 50px);
+		padding: 0.5em;
+
+		label {
+			cursor: pointer;
+			margin-bottom: 0;
+		}
+	}
+
+	.listitem__btn-edit,
+	.listitem__label {
+		display: none;
+	}
+
+	.listitem__form {
+		width: 100%;
+		display: inline-block;
+	}
+
+	.listitem__form {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: nowrap;
+
+		input,
+		button {
+			width: auto;
+			display: inline-block;
+		}
+
+		input {
+			margin-bottom: 0;
+			margin-right: 10px;
+			width: 100%;
+		}
+	}
+
+
+}
