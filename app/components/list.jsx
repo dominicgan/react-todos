@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+var keycode = require('keycode');
 
 export class List extends React.Component {
 	constructor(props) {
@@ -57,10 +58,21 @@ export class ListItem extends React.Component {
 			checked: false,
 			inputDisplay: false
 		};
+
 		this.handleEditInputUpdate = this.handleEditInputUpdate.bind(this);
 		this.handleCheckboxInput   = this.handleCheckboxInput.bind(this);
 		this.clickUpdateBtn        = this.clickUpdateBtn.bind(this);
 		this.updateValueByForm     = this.updateValueByForm.bind(this);
+		this.updateByEnter         = this.updateByEnter.bind(this);
+		this.updateProps           = this.updateProps.bind(this);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			id: nextProps.id,
+			value: nextProps.item.label,
+			label: nextProps.item.label
+		});  
 	}
 
 	/**
@@ -105,10 +117,33 @@ export class ListItem extends React.Component {
 	updateValueByForm(e) {
 		e.preventDefault();
 		console.log('update field by form');
-		this.props.onInputUpdated(this.state.id, this.state.value);
+		this.updateProps(this.state.id, this.state.value);
+	}
+	
+	/**
+	 * update field by enter
+	 * @param  {type} e [event]
+	 * @return {function}
+	 */
+	updateByEnter(e) {
+		if (e.keyCode === keycode('enter')) {
+			e.preventDefault();
+			console.log('keydown', keycode(e), e.target.value);
+			this.updateProps(this.state.id, this.state.value);
+		}
+	}
+	
+	/**
+	 * shared update method
+	 * @param  {integer} i   [item index]
+	 * @param  {string} val [item label]
+	 * @return {function}
+	 */
+	updateProps(i, val) {
+		this.props.onInputUpdated(i, val);
 		return this.setState({
 			inputDisplay: false,
-			label: this.state.value
+			label: val
 		});
 	}
 
@@ -119,32 +154,38 @@ export class ListItem extends React.Component {
 				onSubmit={this.updateValueByForm}>
 				<input type="text"
 					className="listitem__input-edit" 
-					defaultValue={this.state.value}
+					value={this.state.value}
 					onChange={this.handleEditInputUpdate}
 					onKeyDown={this.updateByEnter}
-					disabled={!this.state.inputDisplay}/>
-				<button type="submit">Update</button>
+					disabled={!this.state.inputDisplay}
+					maxLength='88'
+					required />
+				<button type="submit" className="btn-update">Update</button>
 			</form>
 			)
 	}
 
 	render() {
-		console.log(this.state.inputDisplay);
 		let inputDisplayState = this.state.inputDisplay ? '' : 'hidden';
 		return (
 			<div className="todos__item listitem">
 				<input type="checkbox" 
+					className="listitem__input"
 					id={this.state.id} 
 					checked={this.state.checked} 
 					onChange={this.handleCheckboxInput}/>
 				<div className={"listitem__display " + inputDisplayState}>
-					<label 
-						className="listitem__label"
-						htmlFor={this.state.id}>{this.state.label}</label>
+					<span className="listitem__label" 
+						data-tooltip="Click when complete!">
+						<label 
+							htmlFor={this.state.id}>
+								{this.state.label}
+						</label>
+					</span>
 					{this.renderEditForm()}
-					<a href="#" 
+					<button 
 						className="listitem__btn-edit" 
-						onClick={this.clickUpdateBtn}>Edit</a>
+						onClick={this.clickUpdateBtn}>Edit</button>
 				</div>
 			</div>
 			)

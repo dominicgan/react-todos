@@ -5,8 +5,6 @@ import * as $ from 'jquery';
 import {List, ListItem} from './components/list';
 import {InputArea} from './components/input';
 
-console.log('hello world');
-
 class Todos extends React.Component {
 	constructor() {
 		super();
@@ -14,8 +12,9 @@ class Todos extends React.Component {
 			list: []
 		}
 		this.handleInputUpdate = this.handleInputUpdate.bind(this);
-		this.listRemoveItem = this.listRemoveItem.bind(this);
-		this.listUpdateItem = this.listUpdateItem.bind(this);
+		this.listRemoveItem    = this.listRemoveItem.bind(this);
+		this.listUpdateItem    = this.listUpdateItem.bind(this);
+		this.updateToServer    = this.updateToServer.bind(this);
 	}
 
 	componentDidMount(){
@@ -27,27 +26,37 @@ class Todos extends React.Component {
 			console.log('done');
 			console.log(obj, msg, xhr)
 			const list = obj;
-			return this.setState({list});
+			return this.setState({list: list});
 		}).fail((xhr, msg) => {
 			console.log(xhr, msg);
 		});
 	}
 
+	updateToServer(newList) {
+		// do post request
+		// on success setstate
+		this.setState({list: newList});
+	}
+
 	handleInputUpdate(val) {
 		let tempList = this.state.list.slice();
 		tempList.push({'label': val});
-		this.setState({list: tempList});
+		this.updateToServer(tempList);
 	}
 
 	listRemoveItem(i, value) {
-		let tempList = this.state.list.slice();
-		tempList.splice(i, 1);
-		this.setState({'list': tempList});
+		console.log('remove this from list', this.state.list[i]);
+		let tempList = this.state.list.filter(function(elem) { 
+				return elem.label !== value.label;
+			});
+		this.updateToServer(tempList);
 	}
 
 	listUpdateItem(i, value) {
 		console.log('list update item', i, value);
-
+		let tempList = this.state.list.slice();
+		tempList[i].label = value;
+		this.updateToServer(tempList);
 	}
 
 	renderInputarea(){
@@ -65,7 +74,7 @@ class Todos extends React.Component {
 	render() {
 		return (
 			<div className="todos">
-			<h1>Todo List</h1>
+			<h1 className="todos__title">Todo List</h1>
 			{this.renderList(this.state.list)}
 			{this.renderInputarea()}
 			</div>

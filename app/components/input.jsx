@@ -32,26 +32,24 @@ export class InputArea extends React.Component {
 	submitByEnter(e) {
 		if (e.keyCode === keycode('enter')) {
 			console.log('keydown', keycode(e), e.target.value);
-			if (this.state.input !== '') {
-				this.props.onInputChange(this.state.input);
-				this.setState({input: ''});
-			}
+			this.submitByForm(e);
+			// if (this.state.input !== '') {
+			// 	this.props.onInputChange(this.state.input);
+			// 	this.setState({input: ''});
+			// }
 		}
-	}
-
-	renderInput() {
-		return (
-			<input type="text" value={this.state.input}
-				onChange={this.updateStateInput}
-				onKeyDown={this.submitByEnter}/>
-			)
 	}
 
 	render() {
 		return (
 			<form className="todos__input" action="" onSubmit={this.submitByForm}>
-				{this.renderInput()}
-				<button type='submit'>Add</button>
+				<input type="text" value={this.state.input}
+					onChange={this.updateStateInput}
+					onKeyDown={this.submitByEnter}
+					placeholder="Press enter or click the button to add"
+					maxLength='80'
+					required />
+				<button type='submit' className="btn-add">Add Item</button>
 			</form>
 			)
 	}
