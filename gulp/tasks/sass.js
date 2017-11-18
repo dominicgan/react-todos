@@ -10,7 +10,7 @@ const autoprefixer = require('autoprefixer');
 const postcss      = require('gulp-postcss');
 const sourcemaps   = require('gulp-sourcemaps');
 const cssnano      = require('cssnano');
-
+const plumber      = require('gulp-plumber');
 
 gulp.task('sass', function() {
     let plugins = [
@@ -21,6 +21,7 @@ gulp.task('sass', function() {
 	return gulp.src([
 		config.path.assetspath + '/assets/sass/**/*.scss',
 		])
+		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
 		.pipe(concat('style.css'))
