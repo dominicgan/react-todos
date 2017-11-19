@@ -25,8 +25,8 @@ gulp.task('dev', ['clean'], function(cb) {
   return runSequence(
     'copy',
     'sass',
-    'watch.dev',
-    'browsersync.webpack');
+    'nodemon',
+    ['browsersync', 'watch.dev']);
 });
 
 gulp.task('clean', function() {

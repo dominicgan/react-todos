@@ -10,6 +10,7 @@ const autoprefixer = require('autoprefixer');
 const postcss      = require('gulp-postcss');
 const sourcemaps   = require('gulp-sourcemaps');
 const cssnano      = require('cssnano');
+const handleErrors = require('../util/handleErrors');
 const plumber      = require('gulp-plumber');
 
 gulp.task('sass', function() {
@@ -24,6 +25,7 @@ gulp.task('sass', function() {
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass())
+		.on('error', handleErrors)
 		.pipe(concat('style.css'))
         .pipe(postcss(plugins))
 		.pipe(sourcemaps.write('maps'))
