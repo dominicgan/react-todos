@@ -33,10 +33,6 @@ export class InputArea extends React.Component {
 		if (e.keyCode === keycode('enter')) {
 			console.log('keydown', keycode(e), e.target.value);
 			this.submitByForm(e);
-			// if (this.state.input !== '') {
-			// 	this.props.onInputChange(this.state.input);
-			// 	this.setState({input: ''});
-			// }
 		}
 	}
 

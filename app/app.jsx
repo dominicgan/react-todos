@@ -34,7 +34,6 @@ class Todos extends React.Component {
 	}
 
 	updateToServer(newList) {
-		console.log('bef post', {"list": newList});
 		// do post request
 		$.ajax({
 			url: "/api/todos",
@@ -42,16 +41,12 @@ class Todos extends React.Component {
 			method: "POST",
 			dataType: "json"
 		}).done((obj, msg, xhr) => {
-			console.log('done');
 			console.log(obj, msg, xhr)
 			const list = obj.list;
 			return this.setState({list: list});
 		}).fail((xhr, msg) => {
 			console.log(xhr, msg);
 		});
-		
-		// on success setstate
-		// this.setState({list: newList});
 	}
 
 	handleInputUpdate(val) {
@@ -90,9 +85,9 @@ class Todos extends React.Component {
 	render() {
 		return (
 			<div className="todos">
-			<h1 className="todos__title">Todo List</h1>
-			{this.renderList(this.state.list)}
-			{this.renderInputarea()}
+				<h1 className="todos__title">Todo List</h1>
+				{this.renderList(this.state.list)}
+				{this.renderInputarea()}
 			</div>
 			);
 	}

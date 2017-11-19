@@ -9,24 +9,38 @@ export class List extends React.Component {
 		this.state = {
 			activeId: null
 		};
-
-		console.log('list', props);
-
-		this.inputChecked = this.inputChecked.bind(this);
-		this.inputUpdated = this.inputUpdated.bind(this);
+		
+		this.inputChecked      = this.inputChecked.bind(this);
+		this.inputUpdated      = this.inputUpdated.bind(this);
 		this.changeActiveField = this.changeActiveField.bind(this);
 	}
-
+	
+	/**
+	 * on clicking checkbox, lift state 
+	 * of completed item up to parent obj
+	 * @param  {integer} i     [item index]
+	 * @param  {object} value [item object]
+	 */
 	inputChecked(i, value){
 		console.log('inputChecked', i, value);
 		this.props.listItemComplete(i, value);
 	}
-
+	
+	/**
+	 * on updating input, lift state
+	 * of updated item up to parent obj
+	 * @param  {integer} i     [item index]
+	 * @param  {object} value [item object]
+	 */
 	inputUpdated(i, value){
 		console.log('inputUpdated', i, value);
 		this.props.listItemUpdate(i, value);
 	}
 
+	/**
+	 * Toggle active edit field state
+	 * to allow only one field for editing at a time
+	 */
 	changeActiveField(i) {
 		console.log('active input field', i);
 		this.setState({
@@ -45,9 +59,10 @@ export class List extends React.Component {
 				);
 	}
 
+	// remder list container <ul> if items present,
+	// else render empty container
 	render() {
 		let items = this.props.items;
-		console.log(items);
 		if (items) {
 			return (
 			<ul className="todos__list">
@@ -86,13 +101,16 @@ export class ListItem extends React.Component {
 
 		this.handleEditInputUpdate = this.handleEditInputUpdate.bind(this);
 		this.handleCheckboxInput   = this.handleCheckboxInput.bind(this);
-		this.clickEditBtn        = this.clickEditBtn.bind(this);
+		this.clickEditBtn          = this.clickEditBtn.bind(this);
 		this.updateValueByForm     = this.updateValueByForm.bind(this);
 		this.updateByEnter         = this.updateByEnter.bind(this);
 		this.updateProps           = this.updateProps.bind(this);
-		this.focusEditInput = this.focusEditInput.bind(this);
+		this.focusEditInput        = this.focusEditInput.bind(this);
 	}
 
+	/**
+	 * update state on receiving new props
+	 */
 	componentWillReceiveProps(nextProps) {
 		console.log('compoprops', nextProps);
 		this.setState({
@@ -103,6 +121,10 @@ export class ListItem extends React.Component {
 		});  
 	}
 
+	/**
+	 * switch focus to input field on clicking
+	 * update button
+	 */
 	componentDidUpdate() {
 		if (this.state.inputDisplay) {
 			this.focusEditInput();
@@ -186,12 +208,18 @@ export class ListItem extends React.Component {
 		});
 	}
 
+	/**
+	 * handler to focus on edit input field 
+	 */
 	focusEditInput() {
 		console.log('focus on edit field', this.fieldEditInput);
 	    // Explicitly focus the text input using the raw DOM API
 	    this.fieldEditInput.focus();
 	}
 
+	/**
+	 * shift cursor to end of input field on focus
+	 */
 	shiftFocusToInputEnd(e) {
 		console.log('shiftFocusToInputEnd');
 		let val = e.target.value;
@@ -200,8 +228,6 @@ export class ListItem extends React.Component {
 	}
 
 	renderCheckboxComplete() {
-		let isMob = document.documentElement.classList.contains('touch');
-
 		return (
 			<input type="checkbox" 
 				className="listitem__input"
@@ -212,6 +238,8 @@ export class ListItem extends React.Component {
 			)
 	}
 
+	// toggle for attribute if is desktop/mobile onload
+	// to prevent unintended clicks on mobile
 	renderDisplayLabel() {
 		let isMob = document.documentElement.classList.contains('touch');
 
