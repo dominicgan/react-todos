@@ -6,8 +6,10 @@ Build a todo-list app with react.js using express.js to serve/update data. For l
 
 1. Clone repository
 2. run `npm install` to get project dependencies
-3. To run dev server, do `npm run dev`
-4. Or to run production server, do `npm run serve`
+3. To run dev, do `npm run dev`
+4. Or to run prod build, do `npm run serve`
+5. Upon starting prod build, you may visit http://localhost:5000/ to view the
+   app.
 
 ### Prerequisites
 
