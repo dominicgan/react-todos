@@ -11,10 +11,11 @@ Build a todo-list app with react.js using express.js to serve/update data. For l
 
 ### Prerequisites
 
-Recommended to have node.js ^8.5.0
+Recommended to have [Node.js](https://github.com/nodejs/node) ^8.5.0
 
 ## Built With
 
+* [Node.js](https://github.com/nodejs/node)
 * [React](https://github.com/facebook/react)
 * [Express](https://github.com/expressjs/express)
 * [Gulp](https://github.com/gulpjs/gulp)
