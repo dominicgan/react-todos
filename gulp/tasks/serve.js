@@ -6,7 +6,6 @@ const openurl = require('openurl');
 
 gulp.task('express.serve', function(done) {
   console.log(chalk.magenta.inverse('» Starting express server'));
-  console.log(process.env.NODE_ENV);
   var options = {env: process.env};
   options.env.NODE_ENV = 'production';
     // run your script as a server

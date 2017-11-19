@@ -22,8 +22,6 @@ let env = app.get('env');
 if (env === 'development') {
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware');
-
-	console.log('is dev');
 	app.use(webpackMiddleware(bundler, {
 		publicPath: webpackConfig.webpackSettings.output.publicPath,
 		stats: { colors: true }

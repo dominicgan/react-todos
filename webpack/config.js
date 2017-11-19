@@ -1,6 +1,7 @@
 const webpack      = require('webpack');
 const path         = require('path');
 const pkg          = require('../config.json');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const webpackSettings = {
   entry: {
@@ -35,7 +36,11 @@ const webpackSettings = {
     process.env.NODE_ENV === 'production' ? 
     [
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin()
+      new UglifyJsPlugin({
+        compress: {
+            drop_console: true
+        }
+      })
     ] : [
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.HotModuleReplacementPlugin(),
