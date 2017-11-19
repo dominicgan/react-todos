@@ -19,13 +19,14 @@ class Todos extends React.Component {
 
 	componentDidMount(){
 		$.ajax({
-			url: "/data/data.json",
+			url: "/api/todos",
+			data: { id : 1 },
 			method: "GET",
 			dataType: "json"
 		}).done((obj, msg, xhr) => {
 			console.log('done');
 			console.log(obj, msg, xhr)
-			const list = obj;
+			const list = obj.list;
 			return this.setState({list: list});
 		}).fail((xhr, msg) => {
 			console.log(xhr, msg);
@@ -33,9 +34,24 @@ class Todos extends React.Component {
 	}
 
 	updateToServer(newList) {
+		console.log('bef post', {"list": newList});
 		// do post request
+		$.ajax({
+			url: "/api/todos",
+			data: {"list": newList},
+			method: "POST",
+			dataType: "json"
+		}).done((obj, msg, xhr) => {
+			console.log('done');
+			console.log(obj, msg, xhr)
+			const list = obj.list;
+			return this.setState({list: list});
+		}).fail((xhr, msg) => {
+			console.log(xhr, msg);
+		});
+		
 		// on success setstate
-		this.setState({list: newList});
+		// this.setState({list: newList});
 	}
 
 	handleInputUpdate(val) {
@@ -47,8 +63,8 @@ class Todos extends React.Component {
 	listRemoveItem(i, value) {
 		console.log('remove this from list', this.state.list[i]);
 		let tempList = this.state.list.filter(function(elem) { 
-				return elem.label !== value.label;
-			});
+			return elem.label !== value.label;
+		});
 		this.updateToServer(tempList);
 	}
 
@@ -66,8 +82,8 @@ class Todos extends React.Component {
 	renderList(listItems, props){
 		return (
 			<List items={listItems}
-				listItemComplete={this.listRemoveItem}
-				listItemUpdate={this.listUpdateItem}/>
+			listItemComplete={this.listRemoveItem}
+			listItemUpdate={this.listUpdateItem}/>
 			);
 	}
 
