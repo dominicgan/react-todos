@@ -19,6 +19,7 @@ Recommended to have [Node.js](https://github.com/nodejs/node) ^8.5.0
 
 * [Node.js](https://github.com/nodejs/node)
 * [React](https://github.com/facebook/react)
+* [Webpack](https://github.com/webpack/webpack)
 * [Express](https://github.com/expressjs/express)
 * [Gulp](https://github.com/gulpjs/gulp)
 * [Bourbon](https://github.com/thoughtbot/bourbon)
