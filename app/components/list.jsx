@@ -47,17 +47,26 @@ export class List extends React.Component {
 
 	render() {
 		let items = this.props.items;
-		return (
-		<ul className="todos__list">
-			{items.map((item, i) => {
-				return (
-					<li key={i}>
-					{this.renderListItem(item, i)}
-					</li>
-					)
-			})}
-		</ul>
-		)
+		console.log(items);
+		if (items) {
+			return (
+			<ul className="todos__list">
+				{items.map((item, i) => {
+					return (
+						<li key={i}>
+						{this.renderListItem(item, i)}
+						</li>
+						)
+				})}
+			</ul>
+			)
+		} else {
+			return (
+				<div className="todos__empty">
+					<span>You have no more items to do. Yay!</span>
+				</div>
+			)
+		}
 	}
 }
 

@@ -131,6 +131,8 @@
 		}
 
 	}
+}
 
-
+.todos__empty {
+	color: lighten($dark-gray, 30%);
 }

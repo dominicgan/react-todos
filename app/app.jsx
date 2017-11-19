@@ -55,7 +55,7 @@ class Todos extends React.Component {
 	}
 
 	handleInputUpdate(val) {
-		let tempList = this.state.list.slice();
+		let tempList = this.state.list ? this.state.list.slice() : [];
 		tempList.push({'label': val});
 		this.updateToServer(tempList);
 	}
@@ -70,7 +70,7 @@ class Todos extends React.Component {
 
 	listUpdateItem(i, value) {
 		console.log('list update item', i, value);
-		let tempList = this.state.list.slice();
+		let tempList = this.state.list ? this.state.list.slice() : [];
 		tempList[i].label = value;
 		this.updateToServer(tempList);
 	}
