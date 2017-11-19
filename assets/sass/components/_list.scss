@@ -16,16 +16,18 @@
 
 		.listitem__label {
 			&:after {
-				pointer-events: none;
-				content: attr(data-tooltip);
-				display: block;
-				position: absolute;
-				right: 10px;
-				font-size: 13px;
-				line-height: 1;
-				top: 50%;
-				transform: translateY(-50%);
-				opacity: 0.5;
+				html.no-touch & {
+					pointer-events: none;
+					content: attr(data-tooltip);
+					display: block;
+					position: absolute;
+					right: 10px;
+					font-size: 13px;
+					line-height: 1;
+					top: 50%;
+					transform: translateY(-50%);
+					opacity: 0.5;
+				}
 			}
 		}
 	}
@@ -37,13 +39,14 @@
 
 	.listitem__display {
 		display: flex;
-		justify-content: flex-start;
+		justify-content: space-between;
 		align-items: center;
 		flex-wrap: nowrap;
 		width: calc(100% - #{$input-width} - 0.375em);
 
-		.listitem__btn-edit {
+		.listitem__link-edit {
 			transition: all 0.15s ease-in-out;
+			font-size: 14px;
 		}
 
 		&.hidden {
@@ -51,16 +54,21 @@
 				display: inline-block;
 			}
 
-			.listitem__btn-edit {
+			.listitem__link-edit {
 				display: inline-block;
 				opacity: 0;
 				pointer-events: none;
+
+				html.touch & {
+					pointer-events: auto;
+					opacity: 1;
+				}
 			}
 
 			&:hover,
 			&:focus,
 			&:active {
-				.listitem__btn-edit {
+				.listitem__link-edit {
 					opacity: 1;
 					pointer-events: auto;
 				}
@@ -85,9 +93,9 @@
 		}
 	}
 
-	.listitem__btn-edit,
+	.listitem__link-edit,
 	.listitem__label {
-		display: none;
+		display: none; 
 	}
 
 	.listitem__form {
@@ -101,6 +109,11 @@
 		align-items: center;
 		flex-wrap: nowrap;
 
+		@media screen and (max-width: 480px) {
+			flex-wrap: wrap;
+			justify-content: flex-end;
+		}
+
 		input,
 		button {
 			width: auto;
@@ -111,7 +124,12 @@
 			margin-bottom: 0;
 			margin-right: 10px;
 			width: 100%;
+			@media screen and (max-width: 480px) {
+				margin-right: 0;
+				margin-bottom: 10px;
+			}
 		}
+
 	}
 
 

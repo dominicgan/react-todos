@@ -3,9 +3,23 @@
 	justify-content: flex-start;
 	align-items: center;
 	flex-wrap: nowrap;
+	position: relative;
+
+	@media screen and (max-width: 480px) {
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
 
 	input {
 		margin-bottom: 0;
 		margin-right: 10px;
+
+		@media screen and (max-width: 480px) {
+			margin-right: 0;
+			margin-bottom: 10px; 
+		}
+	}
+
+	button {
 	}
 }

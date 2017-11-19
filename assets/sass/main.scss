@@ -40,6 +40,12 @@
 	.todos__input {
 		width: 100%;
 	}
+
+	.todos__title {
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		border-bottom: solid 1px lighten($dark-gray, 50%);
+	}
 }
 
 .btn-add,
