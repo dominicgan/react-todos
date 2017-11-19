@@ -6,9 +6,15 @@ export class List extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			activeId: null
+		};
+
 		console.log('list', props);
+
 		this.inputChecked = this.inputChecked.bind(this);
 		this.inputUpdated = this.inputUpdated.bind(this);
+		this.changeActiveField = this.changeActiveField.bind(this);
 	}
 
 	inputChecked(i, value){
@@ -21,10 +27,19 @@ export class List extends React.Component {
 		this.props.listItemUpdate(i, value);
 	}
 
+	changeActiveField(i) {
+		console.log('active input field', i);
+		this.setState({
+			activeId: i
+		});
+	}
+
 	renderListItem(listItem, id){
 		return (
 			<ListItem item={listItem} 
-				id={id} 
+				id={id}
+				activeId={this.state.activeId}
+				onClickEdit={this.changeActiveField}
 				onInputChecked={this.inputChecked}
 				onInputUpdated={this.inputUpdated} />
 				);
@@ -56,23 +71,33 @@ export class ListItem extends React.Component {
 			value: this.props.item.label,
 			label: this.props.item.label,
 			checked: false,
-			inputDisplay: false
+			inputDisplay: false,
+			activeId: this.props.activeId
 		};
 
 		this.handleEditInputUpdate = this.handleEditInputUpdate.bind(this);
 		this.handleCheckboxInput   = this.handleCheckboxInput.bind(this);
-		this.clickUpdateBtn        = this.clickUpdateBtn.bind(this);
+		this.clickEditBtn        = this.clickEditBtn.bind(this);
 		this.updateValueByForm     = this.updateValueByForm.bind(this);
 		this.updateByEnter         = this.updateByEnter.bind(this);
 		this.updateProps           = this.updateProps.bind(this);
+		this.focusEditInput = this.focusEditInput.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('compoprops', nextProps);
 		this.setState({
 			id: nextProps.id,
 			value: nextProps.item.label,
-			label: nextProps.item.label
+			label: nextProps.item.label,
+			activeId: nextProps.activeId
 		});  
+	}
+
+	componentDidUpdate() {
+		if (this.state.inputDisplay) {
+			this.focusEditInput();
+		}
 	}
 
 	/**
@@ -82,7 +107,9 @@ export class ListItem extends React.Component {
 	 */
 	handleEditInputUpdate(e) {
 		console.log('update input value in state', e.target.value);
-		return this.setState({value: e.target.value});
+		return this.setState({
+			value: e.target.value
+		});
 	}
 
 	/**
@@ -101,10 +128,13 @@ export class ListItem extends React.Component {
 	 * @param  {type} e [event]
 	 * @return {function}
 	 */
-	clickUpdateBtn(e) {
+	clickEditBtn(e) {
 		e.preventDefault();
-		console.log('trigger edit listitem field');
-		return this.setState({inputDisplay: true});
+		console.log('trigger edit listitem field', this.state.id);
+		this.props.onClickEdit(this.state.id);
+		return this.setState({
+			inputDisplay: true
+		});
 	}
 
 	/**
@@ -147,6 +177,48 @@ export class ListItem extends React.Component {
 		});
 	}
 
+	focusEditInput() {
+		console.log('focus on edit field', this.fieldEditInput);
+	    // Explicitly focus the text input using the raw DOM API
+	    this.fieldEditInput.focus();
+	}
+
+	shiftFocusToInputEnd(e) {
+		console.log('shiftFocusToInputEnd');
+		let val = e.target.value;
+		e.target.value = '';
+		e.target.value = val;
+	}
+
+	renderCheckboxComplete() {
+		let isMob = document.documentElement.classList.contains('touch');
+
+		return (
+			<input type="checkbox" 
+				className="listitem__input"
+				id={'listitem_checkbox_' + this.state.id} 
+				checked={this.state.checked} 
+				onChange={this.handleCheckboxInput}
+				aria-labelledby={'listitem_label_' + this.state.id} />
+			)
+	}
+
+	renderDisplayLabel() {
+		let isMob = document.documentElement.classList.contains('touch');
+
+		return (
+			<div className="listitem__label" 
+				data-tooltip="Click when complete!">
+				<label 
+					id={'listitem_label_' + this.state.id}
+
+					htmlFor={isMob ? undefined : this.state.id}>
+						{this.state.label}
+				</label>
+			</div>
+			)
+	}
+
 	renderEditForm() {
 		return (
 			<form action=""
@@ -159,6 +231,8 @@ export class ListItem extends React.Component {
 					onKeyDown={this.updateByEnter}
 					disabled={!this.state.inputDisplay}
 					maxLength='88'
+					ref={(input) => { this.fieldEditInput = input; }}
+					onFocus={this.shiftFocusToInputEnd}
 					required />
 				<button type="submit" className="btn-update">Update</button>
 			</form>
@@ -166,26 +240,23 @@ export class ListItem extends React.Component {
 	}
 
 	render() {
-		let inputDisplayState = this.state.inputDisplay ? '' : 'hidden';
+		console.log('render', this.state.inputDisplay, this.state.id, this.state.activeId);
+		let inputDisplayState = '';
+
+		if (this.state.inputDisplay && this.state.id === this.state.activeId) {
+			inputDisplayState = '';	
+		} else {
+			inputDisplayState = 'hidden';
+		}
 		return (
 			<div className="todos__item listitem">
-				<input type="checkbox" 
-					className="listitem__input"
-					id={this.state.id} 
-					checked={this.state.checked} 
-					onChange={this.handleCheckboxInput}/>
+				{this.renderCheckboxComplete()}
 				<div className={"listitem__display " + inputDisplayState}>
-					<span className="listitem__label" 
-						data-tooltip="Click when complete!">
-						<label 
-							htmlFor={this.state.id}>
-								{this.state.label}
-						</label>
-					</span>
+					{this.renderDisplayLabel()}
 					{this.renderEditForm()}
-					<button 
-						className="listitem__btn-edit" 
-						onClick={this.clickUpdateBtn}>Edit</button>
+					<a href="#"
+						className="listitem__link-edit" 
+						onClick={this.clickEditBtn}>Edit</a>
 				</div>
 			</div>
 			)
