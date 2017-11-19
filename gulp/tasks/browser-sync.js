@@ -13,7 +13,7 @@ const connection = {};
 
 gulp.task('browsersync', function(callback) {
   browserSync({
-    proxy: 'http://localhost:5000',
+    proxy: 'http://' + config.server.connection.local + ':' + config.server.connection.port,
     notify: {
       styles: {
         top: 'auto',
@@ -39,6 +39,5 @@ gulp.task('browsersync', function(callback) {
     // Store started state globally
     connection.external = data.options.external;
     connection.port = data.options.port;
-    return config.server.lrStarted = true;
  });
 });

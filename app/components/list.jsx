@@ -212,7 +212,7 @@ export class ListItem extends React.Component {
 				<label 
 					id={'listitem_label_' + this.state.id}
 
-					htmlFor={isMob ? undefined : this.state.id}>
+					htmlFor={isMob ? undefined : 'listitem_checkbox_' + this.state.id}>
 						{this.state.label}
 				</label>
 			</div>

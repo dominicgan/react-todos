@@ -9,24 +9,27 @@ gulp.task('default', function(cb) {
   return runSequence('dev');
 });
 
-gulp.task('build', ['clean'], function(cb) {
+gulp.task('serve', ['clean'], function(cb) {
   console.log(chalk.magenta.inverse('» Building package...'));
+  console.log(chalk.magenta(process.env.NODE_ENV));
   runSequence(
     'copy',
-    'transpile',
-    'pug',
-    'release'
+    'sass',
+    'webpack.build',
+    'express.serve'
     );
   return console.log(chalk.yellow.inverse('build complete'));
 });
 
 gulp.task('dev', ['clean'], function(cb) {
   console.log(chalk.magenta.inverse('» Building for development...'));
-  return runSequence(
+  console.log(chalk.magenta(process.env.NODE_ENV));
+  runSequence(
     'copy',
     'sass',
     'nodemon',
     ['browsersync', 'watch.dev']);
+  return console.log(chalk.yellow.inverse('dev server complete'));
 });
 
 gulp.task('clean', function() {

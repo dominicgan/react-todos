@@ -11,17 +11,17 @@
     "pluginpath": "./plugins"
   },
   "server": {
-    "lrStarted": false,
     "connection": {
       "local": "localhost",
       "external": null,
-      "port": null
+      "port": 5000
     }
   },
   "build": {
     "isStage": false,
     "isProd": false
   },
+  "env": "",
   "netlify" : {
     "site_id": "",
     "access_token": ""
