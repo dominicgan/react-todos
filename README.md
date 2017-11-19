@@ -1,6 +1,6 @@
 # A simple React/Express.js todo-list app
 
-As per project title, build a todo-list app with react.js using express.js to serve/update data
+Build a todo-list app with react.js using express.js to serve/update data. For learning stuff and messing around!
 
 ## Getting Started
 
@@ -12,10 +12,6 @@ As per project title, build a todo-list app with react.js using express.js to se
 ### Prerequisites
 
 Recommended to have node.js ^8.5.0
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
