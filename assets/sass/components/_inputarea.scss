@@ -23,3 +23,14 @@
 	button {
 	}
 }
+
+.btn-add,
+.btn-update {
+	background-color: $green;
+
+	&:hover,
+	&:focus,
+	&:active {
+		background-color: shade($green, 15%);
+	}
+}
